@@ -24,14 +24,16 @@ class DbDeployPlugin implements Plugin<Project>{
 
     private void addDbDeployCommonConvention(Project project){
         /*
+         * For all DbDeploy tasks we automatically assign the following
+         */
+        def extension = project.extensions.findByName( EXTENSION_NAME )
+
+        /*
          * Adds task after project is evaluated to ensure that
          * extension values are set.
          */
         project.tasks.withType( AbstractDbDeployTask ){
-            /*
-             * For all DbDeploy tasks we automatically assign the following
-             */
-            def extension = project.extensions.findByName( EXTENSION_NAME )
+
             /*
              * Assigning the extension property value wrapped in a closure
              * to the tasks convention mapping.
@@ -48,10 +50,10 @@ class DbDeployPlugin implements Plugin<Project>{
             conventionMapping.lineEnding = { extension.lineEnding }
             conventionMapping.lastChangeToApply = { extension.lastChangeToApply }
         }
-        addDbDeployTasks( project )
+        addDbDeployTasks( project, extension )
     }
 
-    private void addDbDeployTasks( Project project ){
+    private void addDbDeployTasks( Project project, def extension ){
 
         project.task( DBSCRIPTS_TASK_NAME, type: CreateDatabaseScriptsTask){
             conventionMapping.outputfile = { extension.outputfile }

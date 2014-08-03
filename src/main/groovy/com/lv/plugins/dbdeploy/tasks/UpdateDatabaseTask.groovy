@@ -20,9 +20,9 @@ public class UpdateDatabaseTask extends AbstractDbDeployTask {
 
         try {
             dbDeploy.go()
-        } catch (Exception e) {
-            logger.error(e)
-            throw new GradleException("dbdeploy update failed", e)
+        } catch ( Exception e ) {
+            logger.error( e.message )
+            throw new GradleException( "dbdeploy update failed", e )
         }
     }
 }

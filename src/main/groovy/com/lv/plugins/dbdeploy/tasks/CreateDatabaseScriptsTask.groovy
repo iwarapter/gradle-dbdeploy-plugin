@@ -51,9 +51,9 @@ class CreateDatabaseScriptsTask extends AbstractDbDeployTask {
 
         try {
             dbDeploy.go()
-        } catch (Exception e) {
-            logger.error(e)
-            throw new GradleException("dbdeploy change script create failed", e)
+        } catch ( Exception e ) {
+            logger.error( e.message )
+            throw new GradleException( "dbdeploy change script create failed", e )
         }
     }
 

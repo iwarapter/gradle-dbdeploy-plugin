@@ -1,4 +1,5 @@
 apply plugin: 'groovy'
+apply plugin: 'maven'
 
 description 'Gradle plugin for the lightweight dbdeploy database change management tool.'
 group 'com.lv.plugins'
@@ -16,5 +17,13 @@ dependencies{
 
     testCompile ('org.spockframework:spock-core:0.7-groovy-2.0') {
         exclude group:'org.codehaus.groovy'
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://${project.rootDir}/demo/libs")
+        }
     }
 }

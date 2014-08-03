@@ -28,9 +28,9 @@ class CreateChangeScriptTask extends AbstractDbDeployTask {
             final File newChangeScript = changeScriptCreator.go()
             logger.info("Created new change script:\n\t" + newChangeScript.getAbsolutePath())
 
-        } catch (Exception e) {
-            logger.error(e)
-            throw new GradleException("create change script failed", e)
+        } catch ( Exception e ) {
+            logger.error( e.message )
+            throw new GradleException( "create change script failed", e )
         }
     }
 
