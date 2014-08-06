@@ -33,33 +33,32 @@ class DbDeployPluginTestSpec extends Specification {
     }
 
     // TODO: Fix failing unit test
-    /*
     def 'Applies plugin and sets default values for changeScript task'() {
         expect: 'no dbdeploy tasks in the project initially'
-        project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME ) == null
+            project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME ) == null
 
         when: 'I explicitly add the project'
-        project.apply plugin: 'dbdeploy'
+            project.apply plugin: 'com.lv.dbdeploy'
 
         then: 'dbdeploy tasks and properties should be available'
-        project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
-        Task task = project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME )
-        task != null
-        task.group == 'DbDeploy'
-        task.description == 'Generate a new timestamped dbdeploy change script'
-        task.scriptdirectory == new File('src/main/sql')
-        task.driver == null
-        task.url == null
-        task.password == null
-        task.userid == null
-        task.changeLogTableName == 'changelog'
-        task.encoding == null
-        task.delimiter == null
-        task.delimiterType == null
-        task.lineEnding == null
-        task.lastChangeToApply == null
-        task.nameSuffix == "new_change_script"
-    }*/
+            project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
+            Task task = project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME )
+            task != null
+            task.group == 'DbDeploy'
+            task.description == 'Generate a new timestamped dbdeploy change script'
+            task.scriptdirectory == new File('src/main/sql')
+            task.driver == null
+            task.url == null
+            task.password == null
+            task.userid == null
+            task.changeLogTableName == 'changelog'
+            task.encoding == null
+            task.delimiter == null
+            task.delimiterType == null
+            task.lineEnding == null
+            task.lastChangeToApply == null
+            task.nameSuffix == "new_change_script"
+    }
 
     def 'Applies plugin and sets default values for update task'() {
         expect: 'no dbdeploy tasks in the project initially'
@@ -87,14 +86,12 @@ class DbDeployPluginTestSpec extends Specification {
             task.lastChangeToApply == null
     }
 
-    // TODO: Fix failing unit test
-    /*
     def 'Applies plugin and sets default values for dbScripts task'() {
         expect: 'no dbdeploy tasks in the project initially'
             project.tasks.findByName( DbDeployPlugin.DBSCRIPTS_TASK_NAME ) == null
 
         when: 'I explicitly add the project'
-            project.apply plugin: 'dbdeploy'
+            project.apply plugin: 'com.lv.dbdeploy'
 
         then: 'dbdeploy tasks and properties should be available'
             project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
@@ -117,7 +114,7 @@ class DbDeployPluginTestSpec extends Specification {
             task.dbms == null
             task.undoOutputfile == null
             task.templateDirectory == null
-    }*/
+    }
 
     def 'Applies plugin and sets extension values'() {
         expect: 'no dbdeploy tasks in the project initially'

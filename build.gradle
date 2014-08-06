@@ -15,9 +15,7 @@ dependencies{
     compile localGroovy()
     compile 'com.dbdeploy:dbdeploy-core:3.0M3'
 
-    testCompile ('org.spockframework:spock-core:0.7-groovy-2.0') {
-        exclude group:'org.codehaus.groovy'
-    }
+    testCompile ('org.spockframework:spock-core:0.7-groovy-1.8') { exclude group: 'org.codehaus.groovy' }
 }
 
 uploadArchives {
