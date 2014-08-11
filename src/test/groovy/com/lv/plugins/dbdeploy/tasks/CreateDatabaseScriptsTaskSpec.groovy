@@ -24,8 +24,8 @@ class CreateDatabaseScriptsTaskSpec extends Specification {
 
         when:
             project.task( TASK_NAME, type: CreateDatabaseScriptsTask ) {
-                scriptdirectory = new File('src/dist')
-                outputfile = new File('src/dist/out')
+                scriptdirectory = project.file('src/dist')
+                outputfile = project.file('src/dist/out')
                 dbms = 'mysql'
             }
 
@@ -34,8 +34,8 @@ class CreateDatabaseScriptsTaskSpec extends Specification {
             task != null
             task.description == 'Create the apply and undo scripts.'
             task.group == 'DbDeploy'
-            task.scriptdirectory == new File( 'src/dist' )
-            task.outputfile == new File( 'src/dist/out' )
+            task.scriptdirectory == project.file( 'src/dist' )
+            task.outputfile == project.file( 'src/dist/out' )
             task.dbms == 'mysql'
     }
 

@@ -1,7 +1,5 @@
 # Gradle DbDeploy plugin
 
-![Database Logo](http://builddoctorprod.files.wordpress.com/2010/01/75294154_24824e3395_m.jpg)
-
 This plugin is a direct port from the Ant and Maven equivalents found at the [dbdeploy website](https://code.google.com/p/dbdeploy/wiki/GettingStarted)
 
 dbdeploy is a Database Change Management tool. It’s for developers or DBAs who want to evolve their database design - or refactor their database -
@@ -18,10 +16,10 @@ To use the plugin, configure your `build.gradle` script and add the plugin:
             maven { url 'http://dl.bintray.com/sion5/gradle-plugins/' }
         }
         dependencies {
-            classpath 'org.gradle.api.plugins.dbdeploy:DbDeployPlugin:VERSION'
+            classpath 'com.lv.plugins:gradle-dbdeploy-plugin:<VERSION>'
         }
     }
-    apply plugin: 'dbdeploy'
+    apply plugin: 'com.lv.dbdeploy'
 ```
 
 # Tasks

@@ -25,7 +25,7 @@ class CreateChangeScriptTaskSpec extends Specification {
 
         when:
             project.task( TASK_NAME, type: CreateChangeScriptTask ) {
-                scriptdirectory = new File( 'src/dist' )
+                scriptdirectory = project.file( 'src/dist' )
                 nameSuffix = 'test_'
             }
 
@@ -34,7 +34,7 @@ class CreateChangeScriptTaskSpec extends Specification {
             task != null
             task.description == 'Generate a new timestamped dbdeploy change script'
             task.group == 'DbDeploy'
-            task.scriptdirectory == new File( 'src/dist' )
+            task.scriptdirectory == project.file( 'src/dist' )
             task.nameSuffix == 'test_'
     }
 
