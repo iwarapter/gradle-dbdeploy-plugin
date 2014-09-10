@@ -10,15 +10,6 @@ in a simple, controlled, flexible and frequent manner.
 
 To use the plugin, configure your `build.gradle` script and add the plugin:
 ```groovy
-    buildscript {
-        repositories {
-            mavenCentral()
-            maven { url 'http://dl.bintray.com/sion5/gradle-plugins/' }
-        }
-        dependencies {
-            classpath 'com.lv.plugins:gradle-dbdeploy-plugin:<VERSION>'
-        }
-    }
     apply plugin: 'com.lv.dbdeploy'
 ```
 
@@ -30,7 +21,7 @@ The plugin adds 3 tasks to your project; `dbScripts`, `changeScript` and `update
 ### build.gradle
 ```groovy
     dbdeploy {
-            scriptdirectory = new File('.')
+            scriptdirectory = file('src/main/sql')
             driver = 'org.hsqldb.jdbcDriver'
             url = 'jdbc:hsqldb:file:db/testdb;shutdown=true'
             password = ''
