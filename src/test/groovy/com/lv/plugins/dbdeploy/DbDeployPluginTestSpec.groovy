@@ -1,49 +1,44 @@
 package com.lv.plugins.dbdeploy
 
-import org.gradle.api.Project
+import nebula.test.PluginProjectSpec
 import org.gradle.api.Task
-import org.gradle.testfixtures.ProjectBuilder
-import spock.lang.Specification
 
 /**
  * @author Sion Williams
  */
-class DbDeployPluginTestSpec extends Specification {
+class DbDeployPluginTestSpec extends PluginProjectSpec  {
+    static final String PLUGIN_ID = 'com.lv.dbdeploy'
 
-    Project project
-
-    void setup() {
-        project = ProjectBuilder.builder().build()
+    @Override
+    String getPluginName() {
+        return PLUGIN_ID
     }
 
-    def 'Applies plugin and checks created tasks'() {
-        expect: 'no dbdeploy tasks in the project initially'
-            project.tasks.findByName( DbDeployPlugin.DBSCRIPTS_TASK_NAME ) == null
-            project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME ) == null
-            project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME ) == null
-
-        when: 'I explicitly add the project'
-            project.apply plugin: 'com.lv.dbdeploy'
-
-        then: 'three dbdeploy tasks should be added'
-            project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
-            project.tasks.findByName( DbDeployPlugin.DBSCRIPTS_TASK_NAME )
-            project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME )
-            project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME )
+    def setup() {
+        project.apply plugin: pluginName
     }
 
-    // TODO: Fix failing unit test
-    def 'Applies plugin and sets default values for changeScript task'() {
-        expect: 'no dbdeploy tasks in the project initially'
-            project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME ) == null
+    def 'apply creates dbdeploy extension'() {
+        expect: project.extensions.findByName( 'dbdeploy' )
+    }
 
-        when: 'I explicitly add the project'
-            project.apply plugin: 'com.lv.dbdeploy'
+    def "apply creates dbScripts task"() {
+        expect: project.tasks.findByName( 'dbScripts' )
+    }
 
-        then: 'dbdeploy tasks and properties should be available'
-            project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
-            Task task = project.tasks.findByName( DbDeployPlugin.CHANGE_TASK_NAME )
-            task != null
+    def "apply creates update task"() {
+        expect: project.tasks.findByName( 'update' )
+    }
+
+    def "apply creates changeScript task"() {
+        expect: project.tasks.findByName( 'changeScript' )
+    }
+
+    def 'changeScript task has correct default values'() {
+        setup:        
+            Task task = project.tasks.findByName( 'changeScript' )
+
+        expect:
             task.group == 'DbDeploy'
             task.description == 'Generate a new timestamped dbdeploy change script'
             task.scriptdirectory == new File('src/main/sql')
@@ -60,17 +55,11 @@ class DbDeployPluginTestSpec extends Specification {
             task.nameSuffix == "new_change_script"
     }
 
-    def 'Applies plugin and sets default values for update task'() {
-        expect: 'no dbdeploy tasks in the project initially'
-            project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME ) == null
+    def 'update task has correct default values'() {
+        setup:        
+            Task task = project.tasks.findByName( 'update' )
 
-        when: 'I explicitly add the project'
-            project.apply plugin: 'com.lv.dbdeploy'
-
-        then: 'dbdeploy tasks and properties should be available'
-            project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
-            Task task = project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME )
-            task != null
+        expect:
             task.group == 'DbDeploy'
             task.description == 'Apply dbdeploy change scripts to the database.'
             task.scriptdirectory == new File('src/main/sql')
@@ -86,17 +75,11 @@ class DbDeployPluginTestSpec extends Specification {
             task.lastChangeToApply == null
     }
 
-    def 'Applies plugin and sets default values for dbScripts task'() {
-        expect: 'no dbdeploy tasks in the project initially'
-            project.tasks.findByName( DbDeployPlugin.DBSCRIPTS_TASK_NAME ) == null
+    def 'dbScripts task has correct default values'() {
+        setup:        
+            Task task = project.tasks.findByName( 'dbScripts' )
 
-        when: 'I explicitly add the project'
-            project.apply plugin: 'com.lv.dbdeploy'
-
-        then: 'dbdeploy tasks and properties should be available'
-            project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
-            Task task = project.tasks.findByName( DbDeployPlugin.DBSCRIPTS_TASK_NAME )
-            task != null
+        expect:
             task.group == 'DbDeploy'
             task.description == 'Create the apply and undo scripts.'
             task.scriptdirectory == new File('src/main/sql')
@@ -116,13 +99,8 @@ class DbDeployPluginTestSpec extends Specification {
             task.templateDirectory == null
     }
 
-    def 'Applies plugin and sets extension values'() {
-        expect: 'no dbdeploy tasks in the project initially'
-            project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME ) == null
-
-        when: 'I explicitly add the project and set extension values'
-            project.apply plugin: 'com.lv.dbdeploy'
-
+    def 'tasks use correct values when extension is used'() {
+        when:
             project.dbdeploy {
                 scriptdirectory = new File('.')
                 driver = 'org.hsqldb.jdbcDriver'
@@ -131,12 +109,8 @@ class DbDeployPluginTestSpec extends Specification {
                 userid = 'sa'
             }
 
-        then: 'dbdeploy tasks and properties should be available'
-            project.extensions.findByName(DbDeployPlugin.EXTENSION_NAME) != null
+        then:
             Task task = project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME )
-            task != null
-            task.group == 'DbDeploy'
-            task.description == 'Apply dbdeploy change scripts to the database.'
             task.scriptdirectory == new File('.')
             task.driver == 'org.hsqldb.jdbcDriver'
             task.url == 'jdbc:hsqldb:file:db/testdb;shutdown=true'

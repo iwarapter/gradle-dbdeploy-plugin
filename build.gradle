@@ -7,7 +7,12 @@ sourceCompatibility = 1.5
 version = 1.0
 
 repositories {
-    mavenCentral()
+    if( project.hasProperty('internalArtifactRepository') ){
+        maven { url project.internalArtifactRepository }
+    } else {
+        mavenCentral()
+        jcenter()
+    }
 }
 
 dependencies{
@@ -15,8 +20,22 @@ dependencies{
     compile localGroovy()
     compile 'com.dbdeploy:dbdeploy-core:3.0M3'
 
-    testCompile ('org.spockframework:spock-core:0.7-groovy-1.8') { exclude group: 'org.codehaus.groovy' }
+    testCompile 'com.netflix.nebula:nebula-test:1.12.+'
 }
+
+sourceSets {
+    integTest {
+        java.srcDir file('src/integTest/groovy')
+        resources.srcDir file('src/integTest/resources')
+    }
+}
+
+task integTest(type: Test) {
+    testClassesDir = sourceSets.integTest.output.classesDir
+    classpath = sourceSets.integTest.runtimeClasspath
+}
+
+check.dependsOn integTest
 
 uploadArchives {
     repositories {
