@@ -5,6 +5,10 @@ This plugin is a direct port from the Ant and Maven equivalents found at the [db
 dbdeploy is a Database Change Management tool. It’s for developers or DBAs who want to evolve their database design - or refactor their database -
 in a simple, controlled, flexible and frequent manner.
 
+## Build Status
+
+[![Build Status](https://travis-ci.org/Liverpool-Victoria/gradle-dbdeploy-plugin.svg?branch=master)](https://travis-ci.org/Liverpool-Victoria/gradle-dbdeploy-plugin)
+
 
 ## Usage
 
