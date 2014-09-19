@@ -1,6 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
+
 description 'Gradle plugin for the lightweight dbdeploy database change management tool.'
 group 'com.lv.plugins'
 sourceCompatibility = 1.5
@@ -25,8 +26,10 @@ dependencies{
 
 sourceSets {
     integTest {
-        java.srcDir file('src/integTest/groovy')
+        groovy.srcDir file('src/integTest/groovy')
         resources.srcDir file('src/integTest/resources')
+        compileClasspath = sourceSets.main.output + configurations.testRuntime
+        runtimeClasspath = output + compileClasspath
     }
 }
 
