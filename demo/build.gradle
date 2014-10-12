@@ -29,8 +29,8 @@ dbdeploy {
     userid = "sa"
     password = ""
     dbms = 'hsql'
-    outputfile = new File('build/dbdeploy/output.sql')
-    undoOutputfile = new File('build/dbdeploy/undo.sql')
+    outputfile = file('build/dbdeploy/output.sql')
+    undoOutputfile = file('build/dbdeploy/undo.sql')
 }
 
 task deployChangelog {
