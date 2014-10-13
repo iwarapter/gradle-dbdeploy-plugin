@@ -5,6 +5,10 @@ This plugin is a direct port from the Ant and Maven equivalents found at the [db
 dbdeploy is a Database Change Management tool. It’s for developers or DBAs who want to evolve their database design - or refactor their database -
 in a simple, controlled, flexible and frequent manner.
 
+## Latest Version
+
+[ ![Download](https://api.bintray.com/packages/lv/gradle-plugins/gradle-dbdeploy-plugin/images/download.svg) ](https://bintray.com/lv/gradle-plugins/gradle-dbdeploy-plugin/_latestVersion)
+
 ## Build Status
 
 [![Build Status](https://travis-ci.org/Liverpool-Victoria/gradle-dbdeploy-plugin.svg?branch=master)](https://travis-ci.org/Liverpool-Victoria/gradle-dbdeploy-plugin)
@@ -55,4 +59,3 @@ The plugin adds 3 tasks to your project; `dbScripts`, `changeScript` and `update
 * `delimiterType` : Either normal: split on delimiter wherever it occurs or row  only split on delimiter if it features on a line by itself. Default normal.
 * `lineEnding` : Line ending to separate indiviual statement lines when applying directly to the database. Can cr, crlf or lf. Default platform.
 * `lastChangeToApply` : The highest numbered delta script to apply.
-
