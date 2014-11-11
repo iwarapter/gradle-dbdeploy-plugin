@@ -117,4 +117,12 @@ class DbDeployPluginTestSpec extends PluginProjectSpec  {
             task.password == ''
             task.userid == 'sa'
     }
+
+    def 'print classloader'() {
+        when:
+        ClassLoader classLoader = getClass().getClassLoader();
+
+        then:
+        println classLoader.getResources('').toList()
+    }
 }

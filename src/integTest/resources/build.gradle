@@ -1,7 +1,11 @@
 buildscript {
     repositories {
-        maven { url "file://${projectDir}/libs" }
-        mavenCentral()
+        if( project.hasProperty('internalArtifactRepository') ){
+            maven { url project.internalArtifactRepository }
+        } else {
+            mavenCentral()
+            jcenter()
+        }
     }
 
     dependencies {
@@ -10,7 +14,12 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
+    if( project.hasProperty('internalArtifactRepository') ){
+        maven { url project.internalArtifactRepository }
+    } else {
+        mavenCentral()
+        jcenter()
+    }
 }
 
 configurations {
