@@ -14,7 +14,7 @@ class CreateChangeScriptTask extends AbstractDbDeployTask {
      * Name suffix for the file that will be created (e.g. add_email_to_user_table).
      */
     @Input
-    String nameSuffix = "new_change_script"
+    String nameSuffix
 
 
     CreateChangeScriptTask(){

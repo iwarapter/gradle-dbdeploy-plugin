@@ -19,7 +19,7 @@ abstract class AbstractDbDeployTask extends DefaultTask{
     * Full or relative path to the directory containing the delta scripts.
     */
     @InputDirectory
-    File scriptdirectory = new File('src/main/sql')
+    File scriptdirectory
 
     /*
     * Encoding to use for change scripts and output files.
@@ -65,7 +65,7 @@ abstract class AbstractDbDeployTask extends DefaultTask{
     */
     @Input
     @Optional
-    String changeLogTableName = 'changelog'
+    String changeLogTableName
 
     /*
     * Delimiter to use to separate scripts into statements, if dbdeploy will

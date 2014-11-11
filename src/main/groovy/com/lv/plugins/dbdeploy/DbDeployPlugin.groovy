@@ -18,7 +18,7 @@ class DbDeployPlugin implements Plugin<Project>{
 
     @Override
     void apply( Project project ){
-        project.extensions.create( EXTENSION_NAME, DbDeployPluginExtension )
+        project.extensions.create( EXTENSION_NAME, DbDeployPluginExtension, project )
         addDbDeployCommonConvention( project )
     }
 

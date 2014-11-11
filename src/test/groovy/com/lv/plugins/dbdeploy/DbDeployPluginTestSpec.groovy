@@ -41,7 +41,7 @@ class DbDeployPluginTestSpec extends PluginProjectSpec  {
         expect:
             task.group == 'DbDeploy'
             task.description == 'Generate a new timestamped dbdeploy change script'
-            task.scriptdirectory == new File('src/main/sql')
+            task.scriptdirectory ==project.file('src/main/sql')
             task.driver == null
             task.url == null
             task.password == null
@@ -62,7 +62,7 @@ class DbDeployPluginTestSpec extends PluginProjectSpec  {
         expect:
             task.group == 'DbDeploy'
             task.description == 'Apply dbdeploy change scripts to the database.'
-            task.scriptdirectory == new File('src/main/sql')
+            task.scriptdirectory == project.file('src/main/sql')
             task.driver == null
             task.url == null
             task.password == null
@@ -82,7 +82,7 @@ class DbDeployPluginTestSpec extends PluginProjectSpec  {
         expect:
             task.group == 'DbDeploy'
             task.description == 'Create the apply and undo scripts.'
-            task.scriptdirectory == new File('src/main/sql')
+            task.scriptdirectory == project.file('src/main/sql')
             task.driver == null
             task.url == null
             task.password == null
@@ -102,7 +102,7 @@ class DbDeployPluginTestSpec extends PluginProjectSpec  {
     def 'tasks use correct values when extension is used'() {
         when:
             project.dbdeploy {
-                scriptdirectory = new File('.')
+                scriptdirectory = project.file('.')
                 driver = 'org.hsqldb.jdbcDriver'
                 url = 'jdbc:hsqldb:file:db/testdb;shutdown=true'
                 password = ''
@@ -111,7 +111,7 @@ class DbDeployPluginTestSpec extends PluginProjectSpec  {
 
         then:
             Task task = project.tasks.findByName( DbDeployPlugin.UPDATE_TASK_NAME )
-            task.scriptdirectory == new File('.')
+            task.scriptdirectory == project.file('.')
             task.driver == 'org.hsqldb.jdbcDriver'
             task.url == 'jdbc:hsqldb:file:db/testdb;shutdown=true'
             task.password == ''

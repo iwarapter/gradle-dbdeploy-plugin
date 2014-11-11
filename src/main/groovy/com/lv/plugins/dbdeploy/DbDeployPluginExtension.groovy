@@ -1,10 +1,13 @@
 package com.lv.plugins.dbdeploy
 
+import org.gradle.api.Project
+
 /**
  * Created by Sion on 13/04/2014.
  */
 class DbDeployPluginExtension {
-    File scriptdirectory = new File('src/main/sql')
+    static private Project project
+    File scriptdirectory = project.file('src/main/sql')
     String encoding
     String driver
     String url
@@ -25,4 +28,7 @@ class DbDeployPluginExtension {
     File undoOutputfile
     File templateDirectory
 
+    DbDeployPluginExtension(Project project){
+        project = project
+    }
 }
