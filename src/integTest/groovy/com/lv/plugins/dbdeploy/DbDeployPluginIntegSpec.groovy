@@ -6,43 +6,34 @@ import nebula.test.functional.ExecutionResult
 /**
  * @author Sion Williams
  */
-class DbDeployPluginIntegSpec extends IntegrationSpec   {
-    def 'runs build'() {
-        when:
-        ExecutionResult result = runTasks('dependencies')
+class DbDeployPluginIntegSpec extends IntegrationSpec {
 
-        then:
-        result.failure == null
-    }
-
-    def 'setup new build and check tasks are available'() {
-        given:
-        buildFile << '''
-            apply plugin: 'com.lv.dbdeploy'
-        '''.stripIndent()
-
-        when:
-        ExecutionResult result = runTasksSuccessfully('tasks')
-
-        then:
-        result.standardOutput.contains('changeScript - Generate a new timestamped dbdeploy change script')
-        result.standardOutput.contains('dbScripts - Create the apply and undo scripts.')
-        result.standardOutput.contains('update - Apply dbdeploy change scripts to the database.')
-    }
-
-    def 'given a new hsql database build should complete successfully'() {
-        given:
-        directory('scripts')
+    def setup() {
+        directory('db')
         directory('src')
-        copyResources('scripts/', 'scripts/')
-        copyResources('src/', 'src/')
+        copyResources('db', 'db')
+        copyResources('src', 'src')
         copyResources('build.gradle', 'build.gradle')
+    }
 
+    def 'dbScripts produces output and undo scripts'() {
         when:
-        ExecutionResult result = runTasksSuccessfully('dropNCreateDB', 'deployChangelog')
+        runTasksSuccessfully('dbScripts')
 
         then:
-        result.standardOutput.contains(':dropNCreateDB')
-        fileExists('db')
+        fileExists("build/dbdeploy/output.sql")
+        fileExists("build/dbdeploy/undo.sql")
+    }
+
+    def 'update correctly applies the changes to the database'() {
+        given:
+        directory('build/dbdeploy')
+        copyResources('dbdeploy', 'build/dbdeploy')
+
+        when:
+        runTasksSuccessfully('update')
+
+        then:
+        file('db/testdb.script').text.contains('INSERT INTO TEST VALUES(6,\'This is simple text\')')
     }
 }

@@ -5,7 +5,7 @@ apply plugin: 'maven'
 description 'Gradle plugin for the lightweight dbdeploy database change management tool.'
 group 'com.lv.plugins'
 sourceCompatibility = 1.5
-version = 1.1
+version = 1.2
 
 repositories {
     if( project.hasProperty('internalArtifactRepository') ){

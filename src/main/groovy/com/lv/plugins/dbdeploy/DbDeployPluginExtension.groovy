@@ -7,7 +7,7 @@ import org.gradle.api.Project
  */
 class DbDeployPluginExtension {
     static private Project project
-    File scriptdirectory = project.file('src/main/sql')
+    File scriptdirectory = project.file("${project.projectDir}/src/main/sql")
     String encoding
     String driver
     String url

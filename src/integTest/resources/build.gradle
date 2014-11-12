@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.lv.plugins:gradle-dbdeploy-plugin:1.0', 'hsqldb:hsqldb:1.8.0.7'
+        classpath 'hsqldb:hsqldb:1.8.0.7'
     }
 }
 
@@ -34,32 +34,10 @@ apply plugin: 'com.lv.dbdeploy'
 
 dbdeploy {
     driver = "org.hsqldb.jdbcDriver"
-    url = "jdbc:hsqldb:file:db/testdb;shutdown=true"
+    url = "jdbc:hsqldb:file:${projectDir}/db/testdb;shutdown=true"
     userid = "sa"
     password = ""
     dbms = 'hsql'
-    outputfile = file('build/dbdeploy/output.sql')
-    undoOutputfile = file('build/dbdeploy/undo.sql')
-}
-
-task deployChangelog {
-    group 'hsql database'
-    description 'Deploy the changelog table to the DB'
-
-    doLast {
-        ant.sql(driver: 'org.hsqldb.jdbcDriver', url: 'jdbc:hsqldb:file:db/testdb;shutdown=true',
-                userid: 'sa', password: '', classpath: configurations.hlsql.asPath,
-                src: 'scripts/createSchemaVersionTable.hsql.sql')
-        logger.quiet 'Changelog Table Created'
-    }
-}
-
-task dropNCreateDB {
-    group 'hsql database'
-    description 'Drop and create the in memory database'
-
-    doLast {
-        ant.delete(dir: 'db')
-        ant.mkdir(dir: 'db')
-    }
+    outputfile = file("${buildDir}/dbdeploy/output.sql")
+    undoOutputfile = file("${buildDir}/dbdeploy/undo.sql")
 }
